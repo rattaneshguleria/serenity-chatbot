@@ -2,7 +2,7 @@
 //   SERENITY - Frontend Application Logic
 // ============================================
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://serenity-chatbot-5n1z.onrender.com/api';
 
 let token = localStorage.getItem('serenity_token') || '';
 let currentUser = JSON.parse(localStorage.getItem('serenity_user') || 'null');
