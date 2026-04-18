@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serenity — Your Calm Companion</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+</head>
+<body>
+
+<!-- ══ AUTH SCREEN ════════════════════════════ -->
+<div id="auth-screen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="logo-icon">🌿</span>
+      <h1 class="logo-text">Serenity</h1>
+    </div>
+    <p class="auth-tagline">Your calm companion in a chaotic world</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login')">Sign In</button>
+      <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <div id="login-form">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" />
+      </div>
+      <div id="auth-error" class="auth-error"></div>
+      <button class="btn-primary" onclick="handleLogin()">Sign In</button>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signup-form" style="display:none">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="signup-name" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signup-email" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signup-password" placeholder="Min. 6 characters" />
+      </div>
+      <div id="auth-error-signup" class="auth-error"></div>
+      <button class="btn-primary" onclick="handleSignup()">Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ═══════════════════════════════ -->
+<div id="app-screen" class="app-screen" style="display:none">
+  <div class="app">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon-sm">🌿</span>
+          <span class="logo-text-sm">Serenity</span>
+        </div>
+        <button class="new-chat-btn" onclick="createNewSession()">+ New Chat</button>
+      </div>
+
+      <!-- Mood selector -->
+      <div class="sidebar-section">Mood Check-In</div>
+      <div class="mood-area">
+        <div class="mood-row" id="mood-row">
+          <button class="mood-btn" data-mood="great" onclick="setMood(this,'great')" title="Great">😊</button>
+          <button class="mood-btn" data-mood="okay" onclick="setMood(this,'okay')" title="Okay">😐</button>
+          <button class="mood-btn" data-mood="stressed" onclick="setMood(this,'stressed')" title="Stressed">😔</button>
+          <button class="mood-btn" data-mood="overwhelmed" onclick="setMood(this,'overwhelmed')" title="Overwhelmed">😣</button>
+        </div>
+        <div id="mood-label" class="mood-label">How are you feeling?</div>
+      </div>
+
+      <!-- Chat history list -->
+      <div class="sidebar-section">Recent Chats</div>
+      <div class="sidebar-body" id="chat-list">
+        <div class="empty-history">No conversations yet</div>
+      </div>
+
+      <!-- User info & logout -->
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="user-avatar" id="user-avatar">U</div>
+          <span id="user-name">User</span>
+        </div>
+        <button class="logout-btn" onclick="handleLogout()">Sign out</button>
+      </div>
+    </div>
+
+    <!-- Main chat area -->
+    <div class="main">
+      <div class="top-bar">
+        <div>
+          <div class="top-title">🌿 Serenity</div>
+          <div class="top-sub" id="top-sub">Your calm companion in a chaotic world</div>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" onclick="quickAction('breathing')">Breathing</button>
+          <button class="icon-btn" onclick="quickAction('quote')">Daily Quote</button>
+          <button class="icon-btn" onclick="exportChat()">Export</button>
+        </div>
+      </div>
+
+      <div class="chat-area" id="chat-area">
+        <!-- Welcome screen shown when no messages -->
+        <div class="welcome" id="welcome">
+          <div class="welcome-icon">🌿</div>
+          <h2>Welcome to Serenity</h2>
+          <p>Your calm, caring companion. I'm here to help you navigate stress, anxiety, and difficult moments.</p>
+          <div class="quick-btns">
+            <button class="quick-btn" onclick="quickMsg('I\'m feeling really stressed today')">I'm feeling stressed</button>
+            <button class="quick-btn" onclick="quickMsg('I need help with anxiety')">Help with anxiety</button>
+            <button class="quick-btn" onclick="quickMsg('Guide me through a breathing exercise')">Breathing exercise</button>
+            <button class="quick-btn" onclick="quickMsg('I need mindfulness tips')">Mindfulness</button>
+            <button class="quick-btn" onclick="quickMsg('Give me positive affirmations')">Affirmations</button>
+            <button class="quick-btn" onclick="quickMsg('I\'m overwhelmed at work')">Work stress</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-row" id="input-row">
+          <textarea
+            id="msg-input"
+            placeholder="Share what's on your mind… Serenity is here to help."
+            rows="1"
+            onkeydown="handleKey(event)"
+            oninput="autoResize(this)"
+          ></textarea>
+          <button class="send-btn" id="send-btn" onclick="sendMessage()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          </button>
+        </div>
+        <div class="input-hint">Serenity remembers your conversation • Your wellbeing matters</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
