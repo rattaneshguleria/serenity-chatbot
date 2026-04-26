@@ -239,7 +239,7 @@ Authorization: Bearer <your_jwt_token>
 | Backend | Node.js + Express.js |
 | Database | MongoDB Atlas + Mongoose |
 | Auth | JWT (jsonwebtoken) + bcryptjs |
-| AI | Anthropic Claude API |
+| AI | Google Gemini API |
 | Validation | express-validator |
 | Security | express-rate-limit, CORS |
 
