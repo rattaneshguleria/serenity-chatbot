@@ -78,13 +78,13 @@ npm --version     # Should print 9.x.x or higher
 
 ---
 
-### Step 3 — Get Anthropic API Key
+### Step 3 — Get Google Gemini API Key
 
-1. Go to https://console.anthropic.com
-2. Sign up / log in
-3. Click **API Keys** → **Create Key**
-4. Copy the key (starts with `sk-ant-...`)
-5. ⚠️ **Never share this key publicly!**
+1. Go to https://aistudio.google.com/app/apikey  
+2. Sign up / log in with your Google account  
+3. Click **Create API Key**  
+4. Copy the key (starts with `AIza...`)  
+5. ⚠️ Never share this key publicly!
 
 ---
 
