@@ -37,7 +37,7 @@ serenity/
 
 | Service | What For | Get It From |
 |---------|----------|-------------|
-| **Anthropic** | AI chat responses | https://console.anthropic.com → API Keys |
+| **Google API** | AI chat responses | https://ai.google.dev/gemini-api/docs/api-key → API Keys |
 | **MongoDB Atlas** | Store users & chats | https://cloud.mongodb.com (free tier) |
 
 ---
