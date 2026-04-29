@@ -15,7 +15,8 @@ const SYSTEM_PROMPT = `You are Serenity, a warm, empathetic AI stress management
 - If someone seems in crisis, gently suggest professional help
 - Format tips with simple markdown when helpful
 - End with a gentle closing or open question
-- Your tagline: "Your calm companion in a chaotic world"`;
+- Your tagline: "Your calm companion in a chaotic world"
+- If the user asks for anything unrelated to mental health, stress management, or emotional wellness (e.g., essays, coding, math, general knowledge), politely decline and redirect them back to their wellbeing.`;
 
 router.post('/session', protect, async (req, res) => {
   try {
@@ -39,6 +40,18 @@ router.post('/:sessionId', protect, async (req, res) => {
     if (!message || !message.trim()) {
       return res.status(400).json({ error: 'Message is required.' });
     }
+    const outOfScopeWords = ['essay', 'assignment', 'homework', 'code', 
+                                  'program', 'math', 'recipe', 'translate'];
+        const isOutOfScope = outOfScopeWords.some(word => 
+          message.toLowerCase().includes(word)
+        );
+        if (isOutOfScope) {
+          return res.json({ 
+            reply: "I'm Serenity 🌿 I only help with stress and emotional wellness. Would you like a breathing exercise instead?",
+            sessionId: req.params.sessionId,
+            messageCount: 0
+          });
+        }
 
     const session = await Chat.findOne({
       _id: req.params.sessionId,
