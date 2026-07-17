@@ -1,248 +1,217 @@
-# 🌿 Serenity — Stress Management Chatbot
+# 🌿 Serenity — AI Stress Management Chatbot
 
-> **Your Calm Companion in a Chaotic World**
+<div align="center">
 
-A full-stack AI-powered stress management chatbot with real user authentication, persistent chat history, and emotionally aware responses.
+# 🌿 Serenity
+
+### *Your AI-Powered Mental Wellness Companion*
+
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb)
+![Gemini](https://img.shields.io/badge/Google-Gemini_AI-4285F4?style=for-the-badge&logo=google)
+![JWT](https://img.shields.io/badge/JWT-Auth-orange?style=for-the-badge)
+![MIT](https://img.shields.io/badge/License-MIT-success?style=for-the-badge)
+
+*A secure AI chatbot focused on supportive conversations, stress management, and modern web security.*
+
+</div>
 
 ---
 
-## 🗂️ Project Structure
+## 📚 Table of Contents
+- Overview
+- Features
+- Architecture
+- Tech Stack
+- Project Structure
+- Installation
+- Environment Variables
+- Security
+- Workflow
+- API Overview
+- Roadmap
+- Contributing
+- License
 
+---
+
+# 🌸 Overview
+
+Serenity is an AI-powered mental wellness chatbot built using **Node.js**, **Express**, **MongoDB Atlas**, and **Google Gemini AI**. It combines secure authentication with conversational AI to provide users with a supportive environment for everyday wellness conversations.
+
+---
+
+# ✨ Features
+
+- 🤖 Google Gemini AI conversations
+- 🔐 JWT authentication
+- 🔒 Password hashing with bcrypt
+- 📊 MongoDB Atlas storage
+- 🛡️ Rate limiting
+- ✅ Request validation
+- 🌐 REST API backend
+- 💻 Responsive frontend
+- 🚀 Fast Express server
+
+---
+
+# 🏗️ Architecture
+
+```mermaid
+flowchart LR
+U(User) --> F(Frontend)
+F --> A(Express API)
+A --> J(JWT Auth)
+A --> G(Gemini AI)
+A --> M(MongoDB)
+G --> R(Response)
+M --> R
+R --> U
 ```
-serenity/
-├── backend/                    ← Node.js + Express API server
-│   ├── server.js               ← Main entry point
-│   ├── package.json
-│   ├── .env.example            ← Copy to .env and fill in keys
+
+---
+
+# ⚙️ Tech Stack
+
+| Layer | Technology |
+|------|------------|
+| Frontend | HTML, CSS, JavaScript |
+| Backend | Node.js + Express |
+| AI | Google Gemini |
+| Database | MongoDB Atlas |
+| Security | JWT, bcryptjs |
+| Validation | express-validator |
+| Protection | express-rate-limit, CORS |
+
+---
+
+# 📂 Project Structure
+
+```text
+serenity-chatbot/
+├── backend/
+│   ├── middleware/
 │   ├── models/
-│   │   ├── User.js             ← User schema (bcrypt hashed passwords)
-│   │   └── Chat.js             ← Chat session + messages schema
-│   ├── routes/
-│   │   ├── auth.js             ← POST /api/auth/signup, /login, /me
-│   │   ├── chat.js             ← POST /api/chat/:id (send message)
-│   │   └── history.js          ← GET /api/history (past sessions)
-│   └── middleware/
-│       └── auth.js             ← JWT verification middleware
-│
-└── frontend/                   ← Vanilla HTML/CSS/JS frontend
-    ├── index.html              ← Main HTML
-    ├── style.css               ← Dark theme stylesheet
-    ├── app.js                  ← All frontend logic
-    └── package.json
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+├── app.js
+├── index.html
+├── style.css
+├── package.json
+├── README.md
+└── .gitignore
 ```
 
 ---
 
-## ⚙️ API Keys You Need
-
-| Service | What For | Get It From |
-|---------|----------|-------------|
-| **Google API** | AI chat responses | https://ai.google.dev/gemini-api/docs/api-key → API Keys |
-| **MongoDB Atlas** | Store users & chats | https://cloud.mongodb.com (free tier) |
-
----
-
-## 🚀 Step-by-Step Setup
-
-### Step 1 — Install Node.js
-
-Download and install Node.js (v18 or higher) from:
-👉 https://nodejs.org
-
-Verify installation:
-```bash
-node --version    # Should print v18.x.x or higher
-npm --version     # Should print 9.x.x or higher
-```
-
----
-
-### Step 2 — Set Up MongoDB Atlas (Free)
-
-1. Go to https://cloud.mongodb.com and sign up for free
-2. Click **"Build a Database"** → Choose **Free Shared** tier
-3. Choose a cloud provider (AWS/Google) and region → Click **Create**
-4. Under **Security → Database Access**: create a DB user with a password
-5. Under **Security → Network Access**: click **"Add IP Address"** → **"Allow Access From Anywhere"** (0.0.0.0/0)
-6. Click **Connect** → **Connect your application** → Copy the connection string
-
-   It looks like:
-   ```
-   mongodb+srv://youruser:yourpassword@cluster0.abc123.mongodb.net/?retryWrites=true&w=majority
-   ```
-7. Replace `<password>` with your actual DB user password
-8. Add `/serenity` before the `?` to specify database name:
-   ```
-   mongodb+srv://youruser:yourpassword@cluster0.abc123.mongodb.net/serenity?retryWrites=true&w=majority
-   ```
-
----
-
-### Step 3 — Get Google Gemini API Key
-
-1. Go to https://aistudio.google.com/app/apikey  
-2. Sign up / log in with your Google account  
-3. Click **Create API Key**  
-4. Copy the key (starts with `AIza...`)  
-5. ⚠️ Never share this key publicly!
-
----
-
-### Step 4 — Set Up Backend
+# 🚀 Installation
 
 ```bash
-# Navigate to backend folder
-cd serenity/backend
-
-# Install all dependencies
+git clone https://github.com/rattaneshguleria/serenity-chatbot.git
+cd serenity-chatbot
+cd backend
 npm install
-
-# Copy the example env file
-cp .env.example .env
-```
-
-Now open `.env` in any text editor (Notepad, VS Code, etc.) and fill in:
-
-```env
-PORT=5000
-NODE_ENV=development
-
-MONGODB_URI=mongodb+srv://youruser:yourpassword@cluster0.abc123.mongodb.net/serenity?retryWrites=true&w=majority
-
-JWT_SECRET=pick_any_long_random_string_like_this_serenity2024secretkey
-
-JWT_EXPIRES_IN=7d
-
-ANTHROPIC_API_KEY=sk-ant-api03-your-actual-key-here
-
-FRONTEND_URL=http://localhost:3000
-```
-
----
-
-### Step 5 — Run the Backend
-
-```bash
-# From the backend/ folder
-npm run dev
-```
-
-You should see:
-```
-🌿 Serenity server running on http://localhost:5000
-✅ MongoDB connected
-```
-
-Test it's working:
-```
-http://localhost:5000/api/health
-```
-Should return: `{"status":"ok","app":"Serenity","version":"1.0.0"}`
-
----
-
-### Step 6 — Run the Frontend
-
-Open a **new terminal** (keep backend running):
-
-```bash
-# Navigate to frontend folder
-cd serenity/frontend
-
-# Install serve (simple static server)
-npm install
-
-# Start frontend
 npm start
 ```
 
-Or simply open `index.html` directly in your browser (double-click the file).
+Open the frontend using Live Server.
 
 ---
 
-### Step 7 — Use Serenity
+# 🔑 Environment Variables
 
-1. Open your browser → go to `http://localhost:3000`
-2. Click **Sign Up** and create an account
-3. Log in and start chatting!
-
----
-
-## 🔌 API Endpoints Reference
-
-### Authentication
-
-| Method | Endpoint | Body | Description |
-|--------|----------|------|-------------|
-| POST | `/api/auth/signup` | `{ name, email, password }` | Create account |
-| POST | `/api/auth/login` | `{ email, password }` | Login, get JWT token |
-| GET | `/api/auth/me` | — (token in header) | Get current user |
-
-### Chat
-
-| Method | Endpoint | Body | Description |
-|--------|----------|------|-------------|
-| POST | `/api/chat/session` | `{ mood? }` | Create new chat session |
-| POST | `/api/chat/:sessionId` | `{ message, mood? }` | Send message, get reply |
-| DELETE | `/api/chat/:sessionId` | — | Delete a session |
-
-### History
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/history` | Get all sessions (titles) |
-| GET | `/api/history/:id` | Get full messages for a session |
-
-**All chat/history routes require:**
-```
-Authorization: Bearer <your_jwt_token>
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection
+JWT_SECRET=your_secret
+GEMINI_API_KEY=your_api_key
+FRONTEND_URL=http://localhost:5500
 ```
 
 ---
 
-## 🔐 Security Features
+# 🔐 Security
 
-- ✅ Passwords hashed with **bcrypt** (12 salt rounds)
-- ✅ **JWT** tokens for stateless auth (7-day expiry)
-- ✅ **Rate limiting** — 100 requests per 15 minutes per IP
-- ✅ Input validation on all auth routes
-- ✅ Users can only access their own chat sessions
-- ✅ API keys stored in `.env` (never in code)
-
----
-
-## 🛠️ Troubleshooting
-
-**"MongoDB connection failed"**
-- Check your connection string in `.env`
-- Make sure you allowed 0.0.0.0/0 in Network Access
-- Make sure your DB user password has no special characters
-
-**"Invalid token" errors**
-- Your JWT_SECRET may have changed — log out and log in again
-
-**"401 Unauthorized" from Anthropic**
-- Double-check your ANTHROPIC_API_KEY in `.env`
-- Make sure there are no extra spaces or quotes
-
-**Frontend can't reach backend**
-- Make sure backend is running on port 5000
-- Check FRONTEND_URL in .env matches where you serve frontend
+- JWT Authentication
+- Password Hashing
+- Input Validation
+- Rate Limiting
+- Protected Routes
+- CORS
 
 ---
 
-## 🎓 Tech Stack
+# 🔄 Request Flow
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | Vanilla HTML, CSS, JavaScript |
-| Backend | Node.js + Express.js |
-| Database | MongoDB Atlas + Mongoose |
-| Auth | JWT (jsonwebtoken) + bcryptjs |
-| AI | Google Gemini API |
-| Validation | express-validator |
-| Security | express-rate-limit, CORS |
+```text
+User
+ ↓
+Frontend
+ ↓
+Express API
+ ↓
+Authentication
+ ↓
+Gemini AI
+ ↓
+Database
+ ↓
+Response
+```
 
 ---
 
-*Serenity — Built with care for your mental wellbeing 🌿*
+# 📡 API Overview
+
+| Method | Endpoint | Purpose |
+|-------|----------|---------|
+| POST | /register | Register user |
+| POST | /login | Authenticate |
+| POST | /chat | Generate AI response |
+
+> Adjust endpoint names if they differ in your implementation.
+
+---
+
+# 🛣️ Roadmap
+
+- Voice conversations
+- Mood analytics
+- Daily wellness reminders
+- Conversation history
+- Multi-language support
+- Mobile application
+
+---
+
+# 🤝 Contributing
+
+Fork → Branch → Commit → Push → Pull Request.
+
+---
+
+# 📜 License
+
+MIT License.
+
+---
+
+# 👨‍💻 Developer
+
+**Rattanesh Guleria**  
+B.Tech Computer Science Engineering  
+Lovely Professional University
+
+GitHub: https://github.com/rattaneshguleria
+
+---
+
+<div align="center">
+
+## ⭐ Star this repository if you found it useful!
+
+*Building supportive AI experiences with secure web technologies.*
+
+</div>
